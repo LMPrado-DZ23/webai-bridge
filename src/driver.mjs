@@ -1,4 +1,5 @@
 import { chromium } from "playwright-core";
+import { detectGateText } from "./classify.mjs";
 
 /**
  * Drives one provider's web chat through a dedicated persistent Chrome profile.
@@ -74,7 +75,7 @@ export class WebChatDriver {
       url: page.url?.() ?? this.provider.url,
       title: await page.title?.().catch?.(() => "") ?? "",
       counts,
-      gate: detectGate(body),
+      gate: await detectGate(page, body, this.provider.selectors.composer),
       loggedIn: await this.isLoggedIn().catch(() => false),
     };
   }
@@ -82,7 +83,7 @@ export class WebChatDriver {
   /** Human-verification gates are never bypassed; the login window is where they get completed. */
   async assertNoGate() {
     const body = await this.page?.locator("body").innerText().catch(() => "");
-    const gate = detectGate(body ?? "");
+    const gate = await detectGate(this.page, body ?? "", this.provider.selectors.composer);
     if (gate) {
       throw new Error(`${this.provider.label} requires human verification (${gate}). Complete it in the login window, then retry.`);
     }
@@ -154,13 +155,21 @@ export class WebChatDriver {
   }
 }
 
-function detectGate(body) {
-  const patterns = [
-    /confirme sua idade/i,
-    /confirme que voc[eê] [eé] humano/i,
-    /verify you are human/i,
-    /are you a robot/i,
-    /captcha/i,
-  ];
-  return patterns.find(pattern => pattern.test(body))?.toString() ?? null;
+async function detectGate(page, body, composerSelector) {
+  const textGate = detectGateText(body);
+  if (textGate) {
+    if (textGate === "captcha" && composerSelector && page?.locator) {
+      // A rendered composer means the app is usable; a bare "captcha" mention is page noise.
+      const composerCount = await page.locator(composerSelector).count().catch(() => 0);
+      if (composerCount > 0) return null;
+    }
+    return textGate;
+  }
+  if (!page?.evaluate) return null;
+  const hasCaptcha = await page
+    .evaluate(() => Boolean(document.querySelector(
+      'iframe[src*="recaptcha"], iframe[src*="hcaptcha"], .g-recaptcha, [data-hcaptcha]',
+    )))
+    .catch(() => false);
+  return hasCaptcha ? "captcha_widget" : null;
 }

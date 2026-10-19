@@ -1,6 +1,6 @@
-import { test } from "node:test";
+﻿import { test } from "node:test";
 import assert from "node:assert/strict";
-import { classify } from "../src/classify.mjs";
+import { classify, detectGateText } from "../src/classify.mjs";
 
 test("classifies Cloudflare and human gates as anti-bot", () => {
   for (const body of [
@@ -29,4 +29,12 @@ test("classifies sign-in surfaces as login walls", () => {
 
 test("classifies a chat surface as open", () => {
   assert.equal(classify("O que você quer saber? Digite qualquer coisa"), "open");
+});
+
+test("long app pages that merely mention captcha are not gates", () => {
+  const app = `Google Gemini ${"conteúdo ".repeat(400)} reCAPTCHA`;
+  assert.equal(detectGateText(app), null);
+  assert.equal(detectGateText("Confirme sua idade para continuar"), "age_confirmation");
+  assert.equal(detectGateText("Executando verificação de segurança"), "anti_bot_challenge");
+  assert.equal(detectGateText("Solve this captcha"), "captcha");
 });

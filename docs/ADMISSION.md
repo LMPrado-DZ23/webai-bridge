@@ -12,7 +12,7 @@ registered (URL, login URL, candidate selectors) but hidden and refused with
 | Kimi | `kimi.json` | https://www.kimi.ai/ | **ready** | Live: `KIMI-BRIDGE`/`KIMI-STREAM` in the bridge, `HUB-KIMI-CHAT`/`HUB-KIMI-RESP` in the hub |
 | Z.ai / GLM | `zai.json` | https://chat.z.ai/ | planned | `login_wall_after_send` → native login pending |
 | Perplexity | `perplexity.json` | https://www.perplexity.ai/ | planned | `login_wall` on this host → native login pending |
-| Gemini | `gemini.json` | https://gemini.google.com/app | planned | Login page; Google native login pending |
+| Gemini | `gemini.json` | https://gemini.google.com/app | **ready** | Live: `GEMINI-OK`/`GEMINI-STREAM` in the bridge, `HUB-GEMINI-CHAT`/`HUB-GEMINI-RESP` in the hub |
 | ~~Mistral Le Chat~~ | — | https://chat.mistral.ai/ | **excluded** | Cloudflare bot challenge; no bypass attempted (removed) |
 | ~~Claude Web~~ | — | https://claude.ai/new | **excluded** | Cloudflare bot challenge; no bypass attempted (removed) |
 | ~~Grok~~ | — | https://grok.com/ | **not admitted** | Login wall; anti-bot risk, low gain |
