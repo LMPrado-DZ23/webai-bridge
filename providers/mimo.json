@@ -1,0 +1,23 @@
+{
+  "id": "mimo",
+  "label": "Xiaomi MiMo Studio",
+  "status": "planned",
+  "url": "https://aistudio.xiaomimimo.com/",
+  "loginUrl": "https://aistudio.xiaomimimo.com/",
+  "models": [
+    {
+      "id": "mimo-v2.6",
+      "displayName": "MiMo Studio (V2.6)"
+    }
+  ],
+  "selectors": {
+    "composer": "textarea, [contenteditable='true']",
+    "sendButton": "button[aria-label*='Send' i], button[type='submit']",
+    "assistant": "[data-role='assistant'], .markdown, [class*='markdown'], .prose",
+    "loginButton": "button:has-text('Sign in'), a:has-text('Sign in'), button:has-text('Sign in with Google'), a:has-text('Sign in with Google')"
+  },
+  "timeouts": {
+    "replyMs": 180000,
+    "stableMs": 2500
+  }
+}

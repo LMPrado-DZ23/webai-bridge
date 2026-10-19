@@ -31,3 +31,14 @@ Notes:
   they are **never** bypassed; those providers stay out.
 - A bare "captcha" mention on a long page is not a gate; `detectGateText` only flags it on small
   challenge pages, and the driver also ignores it when a chat composer is rendered.
+
+## Second wave (2026-10-19, new candidates)
+
+| Candidate | Landing | Send attempt | Outcome | Final action |
+| --- | --- | --- | --- | --- |
+| **MiMo Studio** (aistudio.xiaomimimo.com) | Xiaomi Account sign-in (Google option) | not attempted | 🔑 login required | Native login window opened; pending validation |
+| HuggingChat | composer | blocked | ⛔ CloudFront "Request blocked" | Excluded |
+| Poe | Cloudflare challenge | not attempted | ⛔ anti-bot | Excluded |
+| Meta AI | login page | not attempted | 🔑 login wall | Candidate (not started) |
+| Doubao | region ban page | not attempted | ⛔ region-restricted | Excluded |
+| Ernie (Baidu) | login wall | not attempted | 🔑 login wall | Candidate (not started) |
