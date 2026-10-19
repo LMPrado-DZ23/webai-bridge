@@ -1,0 +1,19 @@
+{
+    "id":  "mistral",
+    "label":  "Mistral Le Chat",
+    "status":  "planned",
+    "url":  "https://chat.mistral.ai/",
+    "loginUrl":  "https://chat.mistral.ai/",
+    "models":  [
+                   {
+                       "id":  "le-chat",
+                       "displayName":  "Mistral Le Chat"
+                   }
+               ],
+    "selectors":  {
+                      "composer":  "textarea, [contenteditable=\u0027true\u0027]",
+                      "sendButton":  "button[aria-label*=\u0027Send\u0027 i], button[type=\u0027submit\u0027]",
+                      "assistant":  "[data-role=\u0027assistant\u0027], .markdown, .prose, [class*=\u0027markdown\u0027]",
+                      "loginButton":  "button:has-text(\u0027Sign in\u0027), button:has-text(\u0027Log in\u0027), a:has-text(\u0027Sign in\u0027)"
+                  }
+}

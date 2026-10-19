@@ -1,0 +1,19 @@
+{
+    "id":  "zai",
+    "label":  "Z.ai / GLM",
+    "status":  "planned",
+    "url":  "https://chat.z.ai/",
+    "loginUrl":  "https://chat.z.ai/",
+    "models":  [
+                   {
+                       "id":  "glm-5",
+                       "displayName":  "GLM (web)"
+                   }
+               ],
+    "selectors":  {
+                      "composer":  "textarea, [contenteditable=\u0027true\u0027]",
+                      "sendButton":  "button[aria-label*=\u0027Send\u0027 i], button[type=\u0027submit\u0027]",
+                      "assistant":  "[data-role=\u0027assistant\u0027], .markdown, .prose, [class*=\u0027markdown\u0027]",
+                      "loginButton":  "button:has-text(\u0027Sign in\u0027), button:has-text(\u0027Log in\u0027), a:has-text(\u0027Sign in\u0027)"
+                  }
+}
