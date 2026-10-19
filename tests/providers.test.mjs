@@ -34,7 +34,7 @@ test("rejects malformed provider definitions", () => {
 test("planned providers are registered but never exposed", () => {
   const providers = loadProviders();
   assert.deepEqual(providers.map(provider => provider.id).sort(), [
-    "claude", "gemini", "kimi", "mistral", "perplexity", "qwen", "zai",
+    "gemini", "kimi", "perplexity", "qwen", "zai",
   ]);
   assert.deepEqual(exposedProviders(providers).map(provider => provider.id), ["qwen"]);
 });

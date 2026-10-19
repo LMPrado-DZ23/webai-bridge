@@ -1,19 +1,19 @@
 {
-    "id":  "kimi",
-    "label":  "Kimi",
-    "status":  "planned",
-    "url":  "https://kimi.com/",
-    "loginUrl":  "https://kimi.com/",
-    "models":  [
-                   {
-                       "id":  "kimi-k2",
-                       "displayName":  "Kimi (web)"
-                   }
-               ],
-    "selectors":  {
-                      "composer":  "textarea, [contenteditable=\u0027true\u0027]",
-                      "sendButton":  "button[aria-label*=\u0027Send\u0027 i], button[type=\u0027submit\u0027]",
-                      "assistant":  "[data-role=\u0027assistant\u0027], .markdown, .prose, [class*=\u0027markdown\u0027]",
-                      "loginButton":  "button:has-text(\u0027Sign in\u0027), button:has-text(\u0027Log in\u0027), a:has-text(\u0027Sign in\u0027)"
-                  }
+  "id": "kimi",
+  "label": "Kimi",
+  "status": "planned",
+  "url": "https://www.kimi.ai/",
+  "loginUrl": "https://www.kimi.ai/",
+  "models": [
+    {
+      "id": "kimi-k2",
+      "displayName": "Kimi (web)"
+    }
+  ],
+  "selectors": {
+    "composer": "textarea, [contenteditable='true']",
+    "sendButton": "button[aria-label*='Send' i], button[type='submit']",
+    "assistant": "[data-role='assistant'], .markdown, .prose, [class*='markdown']",
+    "loginButton": "button:has-text('Sign in'), button:has-text('Log in'), a:has-text('Sign in'), button:has-text('登录')"
+  }
 }
