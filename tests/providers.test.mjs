@@ -1,4 +1,4 @@
-import { test } from "node:test";
+﻿import { test } from "node:test";
 import assert from "node:assert/strict";
 import { loadProviders, validateProvider, exposedProviders, findModel } from "../src/providers.mjs";
 
@@ -8,7 +8,7 @@ test("loads the Qwen provider and exposes it as beta", () => {
   assert.ok(qwen);
   assert.equal(qwen.status, "beta");
   assert.equal(qwen.models[0].key, "qwen/qwen3.7-plus");
-  assert.equal(qwen.timeouts.loginMs, 600_000);
+  assert.equal(qwen.timeouts.loginMs, 1_800_000);
   assert.deepEqual(exposedProviders(providers).map(provider => provider.id), ["qwen"]);
   assert.equal(findModel(providers, "qwen/qwen3.7-plus").provider.id, "qwen");
   assert.equal(findModel(providers, "qwen/unknown"), undefined);
