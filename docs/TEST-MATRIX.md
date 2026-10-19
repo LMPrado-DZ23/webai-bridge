@@ -42,3 +42,9 @@ Notes:
 | Meta AI | login page | not attempted | 🔑 login wall | Candidate (not started) |
 | Doubao | region ban page | not attempted | ⛔ region-restricted | Excluded |
 | Ernie (Baidu) | login wall | not attempted | 🔑 login wall | Candidate (not started) |
+
+## Final outcome (2026-10-19)
+
+- **Ready (validated):** Qwen, Kimi, Gemini, Perplexity, MiMo Studio, Meta AI.
+- **Excluded:** Mistral and Claude (Cloudflare), Z.ai (slider CAPTCHA), Perchance/Craiyon (Cloudflare), HuggingChat (CloudFront block), Grok (age-confirmation gate without a controllable input), Microsoft Copilot (Microsoft sign-in does not persist in the dedicated automation profile), Ernie (owner has no account), Poe (Cloudflare).
+- **Out of scope:** Pollinations (API platform), Bing Image Creator / Adobe Firefly (image generation, not text chat).
