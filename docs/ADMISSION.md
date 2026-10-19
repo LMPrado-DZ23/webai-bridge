@@ -21,7 +21,9 @@ concrete use case justifies a spike.
 
 ## Promoting a provider
 
-1. Run `node src/index.mjs login <id>` in a dedicated profile and complete any human gate yourself.
+1. Run `node src/index.mjs login <id>`: it opens a **normal Chrome** (no CDP) so Google SSO accepts
+   the sign-in; finish any human gate yourself and **close the Chrome window** when done. The command
+   then verifies the profile with Playwright.
 2. Run `node src/index.mjs diagnose <id>`; adjust `selectors.composer`, `sendButton`, `assistant`
    and `loginButton` until they resolve on the authenticated page.
 3. Send one real turn through the bridge (`POST /v1/chat/completions`) and confirm the reply.

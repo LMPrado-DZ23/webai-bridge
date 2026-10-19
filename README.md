@@ -11,12 +11,15 @@ them as an **OpenAI-compatible** `chat/completions` endpoint. First admitted pro
 
 ```bash
 npm install
-node src/index.mjs login qwen     # once: log in in the opened Chrome window
+node src/index.mjs login qwen     # once: sign in in the normal Chrome window, then close it
 node src/index.mjs serve          # http://127.0.0.1:8788
 node src/index.mjs models
 ```
 
-`login.cmd` and `start.cmd` do the same on Windows (with the default port 8788).
+`login` opens a **normal Chrome** (not automation): Google SSO rejects CDP-driven browsers, so the
+sign-in happens without Playwright attached. Close the Chrome window when done; the bridge then
+verifies the profile and later reuses it for automation. `login.cmd` and `start.cmd` do the same on
+Windows (default port 8788).
 
 ## Endpoints
 

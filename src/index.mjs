@@ -3,6 +3,7 @@ import { existsSync } from "node:fs";
 import { join } from "node:path";
 import { loadProviders, findProvider, exposedProviders } from "./providers.mjs";
 import { WebChatDriver } from "./driver.mjs";
+import { launchNativeChrome } from "./native-login.mjs";
 import { createBridgeServer } from "./server.mjs";
 
 const USAGE = `webai-bridge 0.1.0
@@ -59,21 +60,41 @@ try {
     process.stdout.write(`${JSON.stringify(exposedProviders(providers).flatMap(provider => provider.models), null, 2)}\n`);
   } else if (command === "login" || command === "diagnose" || command === "probe") {
     const provider = findProvider(providers, providerId);
-    const driver = driverFor(provider);
-    try {
-      if (command === "login") {
-        await driver.login();
-        process.stdout.write(`Logged in to ${provider.label}. Profile: ${profileDir(provider)}\n`);
-      } else if (command === "diagnose") {
-        const report = await driver.diagnose();
-        process.stdout.write(`${JSON.stringify(report, null, 2)}\n`);
-      } else {
-        const loggedIn = await driver.isLoggedIn();
+    if (command === "login") {
+      process.stdout.write(
+        `Opening a normal Chrome window for ${provider.label}.\n`
+          + "Sign in normally (Google SSO works here), then CLOSE the Chrome window.\n",
+      );
+      await launchNativeChrome({
+        chromePath: chromePath(),
+        profileDir: profileDir(provider),
+        url: provider.loginUrl,
+      });
+      const verifier = driverFor(provider);
+      try {
+        const loggedIn = await verifier.isLoggedIn();
         process.stdout.write(`${JSON.stringify({ provider: provider.id, loggedIn }, null, 2)}\n`);
-        if (!loggedIn) process.exitCode = 1;
+        if (!loggedIn) {
+          process.stderr.write("Login was not detected. Sign in again and close the Chrome window.\n");
+          process.exitCode = 1;
+        }
+      } finally {
+        await verifier.close();
       }
-    } finally {
-      await driver.close();
+    } else {
+      const driver = driverFor(provider);
+      try {
+        if (command === "diagnose") {
+          const report = await driver.diagnose();
+          process.stdout.write(`${JSON.stringify(report, null, 2)}\n`);
+        } else {
+          const loggedIn = await driver.isLoggedIn();
+          process.stdout.write(`${JSON.stringify({ provider: provider.id, loggedIn }, null, 2)}\n`);
+          if (!loggedIn) process.exitCode = 1;
+        }
+      } finally {
+        await driver.close();
+      }
     }
   } else if (command === "serve") {
     const portIndex = args.indexOf("--port");
