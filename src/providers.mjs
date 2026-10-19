@@ -7,7 +7,11 @@ export const PROVIDER_STATUSES = new Set(["ready", "beta", "planned"]);
 export function loadProviders(directory = fileURLToPath(new URL("../providers/", import.meta.url))) {
   const providers = readdirSync(directory)
     .filter(file => file.endsWith(".json"))
-    .map(file => validateProvider(JSON.parse(readFileSync(join(directory, file), "utf8")), file));
+    .map(file => {
+      // Editors on Windows may add a UTF-8 BOM; JSON.parse rejects it.
+      const text = readFileSync(join(directory, file), "utf8").replace(/^\uFEFF/, "");
+      return validateProvider(JSON.parse(text), file);
+    });
   const ids = new Set();
   for (const provider of providers) {
     if (ids.has(provider.id)) throw new Error(`provider id ${provider.id} is duplicated`);

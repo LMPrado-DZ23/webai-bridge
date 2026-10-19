@@ -9,7 +9,7 @@ registered (URL, login URL, candidate selectors) but hidden and refused with
 | Provider | File | URL | Status | Evidence / next step |
 | --- | --- | --- | --- | --- |
 | **Qwen Web** | `qwen.json` | https://chat.qwen.ai/ | **ready** | Live: `QWEN-ONE`/`QWEN-TWO` in the bridge, `HUB-QWEN-CHAT`/`HUB-QWEN-RESP` in the hub |
-| Kimi | `kimi.json` | https://www.kimi.ai/ | planned | Guest send opens a login modal → native login pending |
+| Kimi | `kimi.json` | https://www.kimi.ai/ | **ready** | Live: `KIMI-BRIDGE`/`KIMI-STREAM` in the bridge, `HUB-KIMI-CHAT`/`HUB-KIMI-RESP` in the hub |
 | Z.ai / GLM | `zai.json` | https://chat.z.ai/ | planned | `login_wall_after_send` → native login pending |
 | Perplexity | `perplexity.json` | https://www.perplexity.ai/ | planned | `login_wall` on this host → native login pending |
 | Gemini | `gemini.json` | https://gemini.google.com/app | planned | Login page; Google native login pending |

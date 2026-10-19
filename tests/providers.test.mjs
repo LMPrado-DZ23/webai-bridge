@@ -9,7 +9,7 @@ test("loads the Qwen provider and exposes it as ready", () => {
   assert.equal(qwen.status, "ready");
   assert.equal(qwen.models[0].key, "qwen/qwen3.7-plus");
   assert.equal(qwen.timeouts.loginMs, 1_800_000);
-  assert.deepEqual(exposedProviders(providers).map(provider => provider.id), ["qwen"]);
+  assert.deepEqual(exposedProviders(providers).map(provider => provider.id), ["kimi", "qwen"]);
   assert.equal(findModel(providers, "qwen/qwen3.7-plus").provider.id, "qwen");
   assert.equal(findModel(providers, "qwen/unknown"), undefined);
 });
@@ -36,5 +36,5 @@ test("planned providers are registered but never exposed", () => {
   assert.deepEqual(providers.map(provider => provider.id).sort(), [
     "gemini", "kimi", "perplexity", "qwen", "zai",
   ]);
-  assert.deepEqual(exposedProviders(providers).map(provider => provider.id), ["qwen"]);
+  assert.deepEqual(exposedProviders(providers).map(provider => provider.id), ["kimi", "qwen"]);
 });
