@@ -45,6 +45,6 @@ Notes:
 
 ## Final outcome (2026-10-19)
 
-- **Ready (validated):** Qwen, Kimi, Gemini, Perplexity, MiMo Studio, Meta AI.
-- **Excluded:** Mistral and Claude (Cloudflare), Z.ai (slider CAPTCHA), Perchance/Craiyon (Cloudflare), HuggingChat (CloudFront block), Grok (age-confirmation gate without a controllable input), Microsoft Copilot (Microsoft sign-in does not persist in the dedicated automation profile), Ernie (owner has no account), Poe (Cloudflare).
+- **Ready (validated):** Qwen, Kimi, Gemini, Perplexity, MiMo Studio, Meta AI, Grok.
+- **Excluded:** Mistral and Claude (Cloudflare), Z.ai (slider CAPTCHA), Perchance/Craiyon (Cloudflare), HuggingChat (CloudFront block), Microsoft Copilot (Microsoft sign-in does not persist in the dedicated automation profile), Ernie (owner has no account), Poe (Cloudflare).
 - **Out of scope:** Pollinations (API platform), Bing Image Creator / Adobe Firefly (image generation, not text chat).

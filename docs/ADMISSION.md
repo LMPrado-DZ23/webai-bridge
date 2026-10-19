@@ -14,8 +14,8 @@ registered (URL, login URL, candidate selectors) but hidden and refused with
 | **Perplexity** | `perplexity.json` | https://www.perplexity.ai/ | **ready** | `PERPLEXITY-OK`/`PERPLEXITY-STREAM` + `HUB-PERPLEXITY-CHAT`/`HUB-PERPLEXITY-RESP`; site-selected model is labelled in `displayName` |
 | **MiMo Studio** | `mimo.json` | https://aistudio.xiaomimimo.com/ | **ready** | Xiaomi/Google native login; `MIMO-FIX`/`MIMO-STREAM` + `HUB-MIMO-*` (completion marker avoids the thinking block) |
 | **Meta AI** | `meta.json` | https://www.meta.ai/ | **ready** | `META-OK` + `HUB-META-CHAT`/`HUB-META-RESP`; the driver prefers the visible composer |
-| Grok | `grok.json` | https://grok.com/ | planned | Native login window opened; pending validation |
-| Microsoft Copilot | `copilot.json` | https://copilot.com/ | planned | Native login window opened; pending validation |
+| **Grok** | `grok.json` | https://grok.com/ | **ready** | Native login + one-time age confirmation in the dedicated profile (owner-authorized); `GROK-OK`/`GROK-STREAM` + `HUB-GROK-*` |
+| ~~Microsoft Copilot~~ | — | https://copilot.com/ | **excluded** | Microsoft sign-in does not persist in the dedicated automation profile |
 | ~~Mistral Le Chat~~ | — | https://chat.mistral.ai/ | **excluded** | Cloudflare bot challenge; no bypass attempted (removed) |
 | ~~Claude Web~~ | — | https://claude.ai/new | **excluded** | Cloudflare bot challenge; no bypass attempted (removed) |
 | ~~Z.ai / GLM~~ | — | https://chat.z.ai/ | **excluded** | Slider security verification ("drag the slider to complete the puzzle"); no bypass attempted (removed) |
