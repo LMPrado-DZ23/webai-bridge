@@ -69,14 +69,14 @@ native).
 
 | # | Provider | Status | Notes |
 | --- | --- | --- | --- |
-| 1 | Qwen Web | beta | login required; composer and streaming via DOM polling |
-| 2 | Mistral Le Chat | planned | simple chat surface, no MCP |
-| 3 | Kimi | planned | long-context documents |
-| 4 | Z.ai / GLM | planned | alternative code/reasoning |
-| 5 | Perplexity | planned | citations, forced model selection |
-| 6 | Claude Web | conditional | anti-bot; own bridge/spike first |
-| 7 | Gemini Web | conditional | anti-bot; own bridge/spike first |
-| 8 | Grok, Copilot | not admitted | login/anti-bot risk, low gain |
+| 1 | Qwen Web | ✅ ready | validated: `QWEN-ONE`/`QWEN-TWO` + `HUB-QWEN-*` |
+| 2 | Kimi | ✅ ready | validated: `KIMI-BRIDGE`/`KIMI-STREAM` + `HUB-KIMI-*` |
+| 3 | Gemini | ✅ ready | validated: `GEMINI-OK`/`GEMINI-STREAM` + `HUB-GEMINI-*` |
+| 4 | Perplexity | ✅ ready | validated: `PERPLEXITY-OK`/`PERPLEXITY-STREAM` + `HUB-PERPLEXITY-*`; site-selected model is labelled |
+| 5 | Mistral Le Chat | ⛔ excluded | Cloudflare bot challenge; never bypassed |
+| 6 | Claude Web | ⛔ excluded | Cloudflare bot challenge; never bypassed |
+| 7 | Z.ai / GLM | ⛔ excluded | slider CAPTCHA; never bypassed |
+| 8 | Grok, Copilot | 🚫 not admitted | login/anti-bot risk, low gain |
 
 A provider is only exposed when its JSON moves to `ready`/`beta`; `planned` entries are registered
 but hidden from `/v1/models` and refuse turns with `503 provider_not_ready`.

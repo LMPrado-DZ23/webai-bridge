@@ -8,28 +8,28 @@ registered (URL, login URL, candidate selectors) but hidden and refused with
 
 | Provider | File | URL | Status | Evidence / next step |
 | --- | --- | --- | --- | --- |
-| **Qwen Web** | `qwen.json` | https://chat.qwen.ai/ | **ready** | Live: `QWEN-ONE`/`QWEN-TWO` in the bridge, `HUB-QWEN-CHAT`/`HUB-QWEN-RESP` in the hub |
-| Kimi | `kimi.json` | https://www.kimi.ai/ | **ready** | Live: `KIMI-BRIDGE`/`KIMI-STREAM` in the bridge, `HUB-KIMI-CHAT`/`HUB-KIMI-RESP` in the hub |
-| Z.ai / GLM | `zai.json` | https://chat.z.ai/ | planned | `login_wall_after_send` → native login pending |
-| Perplexity | `perplexity.json` | https://www.perplexity.ai/ | planned | `login_wall` on this host → native login pending |
-| Gemini | `gemini.json` | https://gemini.google.com/app | **ready** | Live: `GEMINI-OK`/`GEMINI-STREAM` in the bridge, `HUB-GEMINI-CHAT`/`HUB-GEMINI-RESP` in the hub |
+| **Qwen Web** | `qwen.json` | https://chat.qwen.ai/ | **ready** | `QWEN-ONE`/`QWEN-TWO` (bridge) + `HUB-QWEN-CHAT`/`HUB-QWEN-RESP` (hub) |
+| **Kimi** | `kimi.json` | https://www.kimi.ai/ | **ready** | `KIMI-BRIDGE`/`KIMI-STREAM` + `HUB-KIMI-CHAT`/`HUB-KIMI-RESP` |
+| **Gemini** | `gemini.json` | https://gemini.google.com/app | **ready** | `GEMINI-OK`/`GEMINI-STREAM` + `HUB-GEMINI-CHAT`/`HUB-GEMINI-RESP` |
+| **Perplexity** | `perplexity.json` | https://www.perplexity.ai/ | **ready** | `PERPLEXITY-OK`/`PERPLEXITY-STREAM` + `HUB-PERPLEXITY-CHAT`/`HUB-PERPLEXITY-RESP`; site-selected model is labelled in `displayName` |
 | ~~Mistral Le Chat~~ | — | https://chat.mistral.ai/ | **excluded** | Cloudflare bot challenge; no bypass attempted (removed) |
 | ~~Claude Web~~ | — | https://claude.ai/new | **excluded** | Cloudflare bot challenge; no bypass attempted (removed) |
+| ~~Z.ai / GLM~~ | — | https://chat.z.ai/ | **excluded** | Slider security verification ("drag the slider to complete the puzzle"); no bypass attempted (removed) |
 | ~~Grok~~ | — | https://grok.com/ | **not admitted** | Login wall; anti-bot risk, low gain |
-| ~~Copilot~~ | — | https://copilot.microsoft.com/ | **not admitted** | Sign-in wall; anti-bot risk, low gain |
+| ~~Copilot~~ | — | https://copilot.microsoft.com/ | **not admitted** | Sign-in wall; anti-bot risk |
 
-Cloudflare "verificação de segurança" is an anti-bot gate. Per project rules it is **never** bypassed,
-so Mistral and Claude are left out. Grok and Copilot remain unregistered.
+Cloudflare challenges and CAPTCHA sliders are anti-bot gates. Per project rules they are **never**
+bypassed, so Mistral, Claude and Z.ai are left out. Grok and Copilot remain unregistered.
 
 ## Promoting a provider
 
 1. Run `node src/index.mjs login <id>`: it opens a **normal Chrome** (no CDP) so Google SSO accepts
    the sign-in; finish any human gate yourself and **close the Chrome window** when done. The command
-   then verifies the profile with Playwright.
+   then verifies the profile with Playwright (waiting for the SPA to boot).
 2. Run `node src/index.mjs diagnose <id>`; adjust `selectors.composer`, `sendButton`, `assistant`
    and `loginButton` until they resolve on the authenticated page.
 3. Send one real turn through the bridge (`POST /v1/chat/completions`) and confirm the reply.
 4. Change `status` to `ready`, run `npm test`, and commit the updated JSON with the evidence in the
    commit message.
 
-Human-verification gates (age, CAPTCHA, MFA, Cloudflare) are never bypassed by the bridge.
+Human-verification gates (age, CAPTCHA, MFA, Cloudflare, sliders) are never bypassed by the bridge.

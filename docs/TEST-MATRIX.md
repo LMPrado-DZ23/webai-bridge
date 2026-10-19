@@ -5,29 +5,29 @@ Repeatable probe:
 ```bash
 node scripts/probe-candidates.mjs                 # landing-page classification only
 node scripts/probe-candidates.mjs --send          # + one guest turn attempt per accessible site
-node scripts/probe-candidates.mjs --send --only zai,perplexity
+node scripts/probe-candidates.mjs --send --only kimi,zai
 ```
 
 The script opens a **fresh throwaway profile per site**, never a personal profile, and never tries to
 solve a CAPTCHA/Cloudflare/login wall. Results below are from this host.
 
-| Candidate | Landing | Guest turn | Classification | Action |
+| Candidate | Landing | Send attempt | Outcome | Final action |
 | --- | --- | --- | --- | --- |
-| **Qwen Web** | composer | **`QWEN-ONE` / `QWEN-TWO` (live)** | ✅ ready | Admitted; validated through the bridge and the hub (`HUB-QWEN-CHAT`, `HUB-QWEN-RESP`) |
-| Mistral Le Chat | Cloudflare challenge | not attempted | ⛔ anti-bot | **Excluded** (no bypass attempted) |
-| Claude Web | Cloudflare challenge | not attempted | ⛔ anti-bot | **Excluded** (no bypass attempted) |
-| Kimi (kimi.ai) | composer + login links | login modal after send | 🔑 login required | Native login window opened; pending validation |
-| Z.ai / GLM | composer + login links | `login_wall_after_send` | 🔑 login required | Native login pending |
-| Perplexity | composer + "Entrar" | `login_wall` | 🔑 login required | Native login pending |
-| Gemini | composer count 2, login page | not reached (login page) | 🔑 login required | Native login pending |
-| Grok | composer + login | not attempted | 🔑 login wall | Not admitted (login/anti-bot, low gain) |
+| **Qwen Web** | composer | live turn | **`QWEN-ONE` / `QWEN-TWO`** | ✅ ready in bridge + hub |
+| **Kimi** | composer + login links | login modal | **`KIMI-BRIDGE` / `KIMI-STREAM`** after native login | ✅ ready in bridge + hub |
+| **Gemini** | composer + login page | Google login | **`GEMINI-OK` / `GEMINI-STREAM`** after native login | ✅ ready in bridge + hub |
+| **Perplexity** | composer + "Entrar" | logged-in turn | **`PERPLEXITY-OK` / `PERPLEXITY-STREAM`** | ✅ ready in bridge + hub (site-selected model labelled) |
+| Mistral Le Chat | Cloudflare challenge | not attempted | ⛔ anti-bot | **Excluded** (no bypass) |
+| Claude Web | Cloudflare challenge | not attempted | ⛔ anti-bot | **Excluded** (no bypass) |
+| Z.ai / GLM | composer | slider verification shown | ⛔ anti-bot ("Please drag the slider to complete the puzzle") | **Excluded** (no bypass) |
+| Grok | composer + login | not attempted | 🔑 login wall | Not admitted |
 | Copilot | sign-in page | not attempted | 🔑 login wall | Not admitted |
 
 Notes:
 
-- `login_wall` is a conservative keyword classification (nav text such as "Entrar" counts). For Kimi
-  and Z.ai the send attempt confirmed a real login requirement; Perplexity/Gemini were not sent
-  because the page itself is a sign-in surface on this host.
-- Cloudflare's "verificação de segurança" is an anti-bot gate. Per project rules it is **never**
-  bypassed; those providers stay out.
-- Qwen is the only candidate validated end-to-end from this host so far.
+- `login_wall` is a conservative keyword classification (nav text such as "Entrar" counts). Qwen,
+  Kimi, Gemini and Perplexity were validated end-to-end after their native login.
+- Cloudflare's "verificação de segurança" and Z.ai's slider are anti-bot gates. Per project rules
+  they are **never** bypassed; those providers stay out.
+- A bare "captcha" mention on a long page is not a gate; `detectGateText` only flags it on small
+  challenge pages, and the driver also ignores it when a chat composer is rendered.

@@ -57,6 +57,9 @@ export class WebChatDriver {
 
   async isLoggedIn() {
     const page = await this.open();
+    // The SPA can still be booting right after Chrome reopens; wait for the composer first.
+    await page.locator(this.provider.selectors.composer).first()
+      .waitFor({ timeout: 15_000 }).catch(() => {});
     const composer = await page.locator(this.provider.selectors.composer).count().catch(() => 0);
     const loginButtons = await page.locator(this.provider.selectors.loginButton).count().catch(() => 0);
     return composer > 0 && loginButtons === 0;
