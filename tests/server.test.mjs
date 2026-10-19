@@ -107,3 +107,26 @@ test("unknown and planned models fail closed", async () => {
     await close(hub.server);
   }
 });
+
+test("driver failures fail closed with an explicit error", async () => {
+  const server = createBridgeServer({
+    providers: [qwen],
+    driverFactory: async () => ({
+      async runTurn() { throw new Error("Not logged in to Qwen Web"); },
+      async close() {},
+    }),
+  });
+  const port = await listen(server);
+  try {
+    const response = await fetch(`http://127.0.0.1:${port}/v1/chat/completions`, {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ model: "qwen/qwen3.7-plus", messages: [{ role: "user", content: "oi" }] }),
+    });
+    assert.equal(response.status, 500);
+    const body = await response.json();
+    assert.match(body.error.message, /Not logged in/);
+  } finally {
+    await new Promise(resolve => server.close(resolve));
+  }
+});

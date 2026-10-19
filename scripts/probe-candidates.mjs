@@ -12,6 +12,7 @@ import { chromium } from "playwright-core";
 import { mkdtempSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
+import { classify } from "../src/classify.mjs";
 
 const CHROME = process.env.WEB_AI_CHROME
   ?? "C:/Program Files/Google/Chrome/Application/chrome.exe";
@@ -34,30 +35,7 @@ const only = args.includes("--only")
   : undefined;
 const allowSend = args.includes("--send");
 
-const CHALLENGE_PATTERNS = [
-  /verificação de segurança/i,
-  /just a moment/i,
-  /cloudflare/i,
-  /captcha/i,
-  /confirme que voc[eê] [eé] humano/i,
-  /are you a robot/i,
-  /verify you are human/i,
-];
-const LOGIN_PATTERNS = [
-  /sign in/i,
-  /log in/i,
-  /fazer login/i,
-  /entrar/i,
-  /登录/i,
-  /scan.*qr|二维码/i,
-  /手机号|phone number/i,
-];
-
-function classify(body) {
-  if (CHALLENGE_PATTERNS.some(pattern => pattern.test(body))) return "anti_bot_challenge";
-  if (LOGIN_PATTERNS.some(pattern => pattern.test(body))) return "login_wall";
-  return "open";
-}
+const CHALLENGE_NOTE = "Cloudflare/anti-bot challenge is never bypassed";
 
 async function probe(candidate) {
   const profile = mkdtempSync(join(tmpdir(), `webai-candidate-${candidate.id}-`));
