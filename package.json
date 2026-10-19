@@ -1,0 +1,23 @@
+{
+  "name": "webai-bridge",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Local bridge that drives logged-in web AI chats (Qwen first, then the other admitted providers) through a real browser profile and exposes them as an OpenAI-compatible chat endpoint.",
+  "type": "module",
+  "engines": {
+    "node": ">=20.11"
+  },
+  "scripts": {
+    "start": "node src/index.mjs serve",
+    "login": "node src/index.mjs login",
+    "diagnose": "node src/index.mjs diagnose",
+    "probe": "node src/index.mjs probe",
+    "models": "node src/index.mjs models",
+    "test": "node --test",
+    "verify": "node --test && node src/index.mjs models"
+  },
+  "dependencies": {
+    "playwright-core": "^1.49.0"
+  },
+  "license": "MIT"
+}

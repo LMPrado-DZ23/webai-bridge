@@ -1,0 +1,26 @@
+{
+  "id": "qwen",
+  "label": "Qwen Web",
+  "status": "beta",
+  "url": "https://chat.qwen.ai/",
+  "loginUrl": "https://chat.qwen.ai/",
+  "models": [
+    {
+      "id": "qwen3.7-plus",
+      "displayName": "Qwen3.7-Plus",
+      "contextWindow": 131072
+    }
+  ],
+  "selectors": {
+    "composer": "textarea, [contenteditable='true']",
+    "sendButton": "button[aria-label*='Send' i], button[type='submit'], button[aria-label*='Enviar' i]",
+    "assistant": "[data-role='assistant'], .markdown-body, [class*='markdown']",
+    "loginButton": "button:has-text('Fazer login'), button:has-text('Sign in'), button:has-text('Log in')",
+    "stopButton": "button[aria-label*='Stop' i], button[aria-label*='Parar' i]"
+  },
+  "timeouts": {
+    "loginMs": 600000,
+    "replyMs": 180000,
+    "stableMs": 1800
+  }
+}
