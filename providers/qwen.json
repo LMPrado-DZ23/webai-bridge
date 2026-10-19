@@ -19,7 +19,7 @@
     "stopButton": "button[aria-label*='Stop' i], button[aria-label*='Parar' i]"
   },
   "timeouts": {
-    "loginMs": 600000,
+    "loginMs": 1800000,
     "replyMs": 180000,
     "stableMs": 1800
   }
