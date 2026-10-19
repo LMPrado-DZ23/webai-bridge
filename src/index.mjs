@@ -60,18 +60,21 @@ try {
   } else if (command === "login" || command === "diagnose" || command === "probe") {
     const provider = findProvider(providers, providerId);
     const driver = driverFor(provider);
-    if (command === "login") {
-      await driver.login();
-      process.stdout.write(`Logged in to ${provider.label}. Profile: ${profileDir(provider)}\n`);
-    } else if (command === "diagnose") {
-      const report = await driver.diagnose();
-      process.stdout.write(`${JSON.stringify(report, null, 2)}\n`);
-    } else {
-      const loggedIn = await driver.isLoggedIn();
-      process.stdout.write(`${JSON.stringify({ provider: provider.id, loggedIn }, null, 2)}\n`);
-      if (!loggedIn) process.exitCode = 1;
+    try {
+      if (command === "login") {
+        await driver.login();
+        process.stdout.write(`Logged in to ${provider.label}. Profile: ${profileDir(provider)}\n`);
+      } else if (command === "diagnose") {
+        const report = await driver.diagnose();
+        process.stdout.write(`${JSON.stringify(report, null, 2)}\n`);
+      } else {
+        const loggedIn = await driver.isLoggedIn();
+        process.stdout.write(`${JSON.stringify({ provider: provider.id, loggedIn }, null, 2)}\n`);
+        if (!loggedIn) process.exitCode = 1;
+      }
+    } finally {
+      await driver.close();
     }
-    await driver.close();
   } else if (command === "serve") {
     const portIndex = args.indexOf("--port");
     const port = portIndex >= 0 ? Number(args[portIndex + 1]) : Number(process.env.WEB_AI_BRIDGE_PORT ?? 8788);
