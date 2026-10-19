@@ -8,11 +8,11 @@ registered (URL, login URL, candidate selectors) but hidden and refused with
 
 | Provider | File | URL | Status | Next step |
 | --- | --- | --- | --- | --- |
-| Qwen Web | `qwen.json` | https://chat.qwen.ai/ | **beta** | user logs in once → live turn → promote to `ready` |
-| Mistral Le Chat | `mistral.json` | https://chat.mistral.ai/ | planned | login + selector spike |
+| Qwen Web | `qwen.json` | https://chat.qwen.ai/ | **beta** | native login via Google (CDP is rejected by Google) → live turn → `ready` |
+| Mistral Le Chat | `mistral.json` | https://chat.mistral.ai/ | planned | redirects to `v2.auth.mistral.ai` (e-mail/Apple/Google/Microsoft); login required, no guest composer |
 | Kimi | `kimi.json` | https://kimi.com/ | planned | login + selector spike |
 | Z.ai / GLM | `zai.json` | https://chat.z.ai/ | planned | login + selector spike |
-| Perplexity | `perplexity.json` | https://www.perplexity.ai/ | planned | login + citations/model spike |
+| Perplexity | `perplexity.json` | https://www.perplexity.ai/ | planned | guest composer exists ("Pergunte qualquer coisa…"), but the site auto-selects the model; identity gate must be solved before admission |
 | Claude Web | `claude.json` | https://claude.ai/new | planned (conditional) | anti-bot/spike before admission |
 | Gemini Web | `gemini.json` | https://gemini.google.com/app | planned (conditional) | anti-bot/spike before admission |
 
