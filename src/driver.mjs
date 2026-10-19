@@ -98,20 +98,38 @@ export class WebChatDriver {
       throw new Error(`Not logged in to ${this.provider.label}. Run: node src/index.mjs login ${this.provider.id}`);
     }
     await this.assertNoGate();
+    const assistants = page.locator(this.provider.selectors.assistant);
+    const beforeCount = await assistants.count().catch(() => 0);
+    const beforeText = beforeCount > 0 ? (await assistants.last().innerText().catch(() => "")) ?? "" : "";
+
     await page.locator(this.provider.selectors.composer).first().click();
     await page.keyboard.insertText(prompt);
     await page.keyboard.press("Enter");
 
-    const assistant = page.locator(this.provider.selectors.assistant).last();
+    // Wait for a *new* assistant node (or for the last node to grow) before streaming, otherwise
+    // a previous answer would be replayed as if it belonged to this turn.
+    let useNewNode = false;
+    const waitStarted = Date.now();
+    while (Date.now() - waitStarted < 60_000) {
+      const count = await assistants.count().catch(() => 0);
+      if (count > beforeCount) {
+        useNewNode = true;
+        break;
+      }
+      const lastText = count > 0 ? (await assistants.last().innerText().catch(() => "")) ?? "" : "";
+      if (lastText && lastText !== beforeText) break;
+      await page.waitForTimeout(300);
+    }
+    const assistant = assistants.last();
     try {
-      await assistant.waitFor({ timeout: 60_000 });
+      await assistant.waitFor({ timeout: 30_000 });
     } catch {
       // Some composers need an explicit send click instead of Enter.
       await page.locator(this.provider.selectors.sendButton).first().click().catch(() => {});
       await assistant.waitFor({ timeout: 30_000 });
     }
 
-    let previous = "";
+    let previous = useNewNode ? "" : beforeText;
     let stableSince = Date.now();
     const started = Date.now();
     while (Date.now() - started < this.provider.timeouts.replyMs) {
