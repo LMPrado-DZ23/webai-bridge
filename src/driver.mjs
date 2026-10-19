@@ -106,8 +106,22 @@ export class WebChatDriver {
     const beforeCount = await assistants.count().catch(() => 0);
     const beforeText = beforeCount > 0 ? (await assistants.last().innerText().catch(() => "")) ?? "" : "";
 
-    await page.locator(this.provider.selectors.composer).first().click();
-    await page.keyboard.insertText(prompt);
+    // Prefer the visible composer: marketing pages often keep hidden duplicate inputs.
+    const composerLocator = page.locator(this.provider.selectors.composer);
+    let composer = composerLocator.first();
+    if (typeof composerLocator.filter === "function") {
+      const visibleComposers = composerLocator.filter({ visible: true });
+      if (await visibleComposers.count().catch(() => 0) > 0) composer = visibleComposers.first();
+    }
+    const composerTag = typeof composer.evaluate === "function"
+      ? await composer.evaluate(node => node.tagName).catch(() => "")
+      : "";
+    if (composerTag === "TEXTAREA") {
+      await composer.fill(prompt);
+    } else {
+      await composer.click();
+      await page.keyboard.insertText(prompt);
+    }
     await page.keyboard.press("Enter");
 
     // Wait for a *new* assistant node (or for the last node to grow) before streaming, otherwise
@@ -136,6 +150,25 @@ export class WebChatDriver {
     let previous = useNewNode ? "" : beforeText;
     let stableSince = Date.now();
     const started = Date.now();
+
+    // Some UIs render a thinking block before the answer; a completion marker avoids capturing it.
+    // Count existing markers first: older turns keep their "Took Ns" labels in the transcript.
+    if (this.provider.selectors.completion) {
+      const pattern = new RegExp(this.provider.selectors.completion, "gi");
+      const countMatches = text => (text.match(pattern) ?? []).length;
+      const beforeBody = await page.locator("body").innerText().catch(() => "");
+      const beforeCompletions = countMatches(beforeBody);
+      while (Date.now() - started < this.provider.timeouts.replyMs) {
+        if (signal?.aborted) throw new Error("Turn cancelled");
+        const body = await page.locator("body").innerText().catch(() => "");
+        if (countMatches(body) > beforeCompletions) break;
+        await page.waitForTimeout(500);
+      }
+      const text = (await assistants.last().innerText().catch(() => "")) ?? "";
+      if (text) onDelta?.(text);
+      return text;
+    }
+
     while (Date.now() - started < this.provider.timeouts.replyMs) {
       if (signal?.aborted) throw new Error("Turn cancelled");
       const text = (await assistant.innerText().catch(() => "")) ?? "";

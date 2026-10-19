@@ -65,6 +65,7 @@ export function validateProvider(raw, source = "provider") {
       assistant: raw.selectors.assistant,
       loginButton: raw.selectors.loginButton,
       stopButton: raw.selectors.stopButton ?? "",
+      completion: raw.selectors.completion ?? "",
     },
     timeouts: {
       loginMs: Number.isSafeInteger(timeouts.loginMs) ? timeouts.loginMs : 600_000,

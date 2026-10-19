@@ -12,11 +12,14 @@ registered (URL, login URL, candidate selectors) but hidden and refused with
 | **Kimi** | `kimi.json` | https://www.kimi.ai/ | **ready** | `KIMI-BRIDGE`/`KIMI-STREAM` + `HUB-KIMI-CHAT`/`HUB-KIMI-RESP` |
 | **Gemini** | `gemini.json` | https://gemini.google.com/app | **ready** | `GEMINI-OK`/`GEMINI-STREAM` + `HUB-GEMINI-CHAT`/`HUB-GEMINI-RESP` |
 | **Perplexity** | `perplexity.json` | https://www.perplexity.ai/ | **ready** | `PERPLEXITY-OK`/`PERPLEXITY-STREAM` + `HUB-PERPLEXITY-CHAT`/`HUB-PERPLEXITY-RESP`; site-selected model is labelled in `displayName` |
+| **MiMo Studio** | `mimo.json` | https://aistudio.xiaomimimo.com/ | **ready** | Xiaomi/Google native login; `MIMO-FIX`/`MIMO-STREAM` + `HUB-MIMO-*` (completion marker avoids the thinking block) |
+| **Meta AI** | `meta.json` | https://www.meta.ai/ | **ready** | `META-OK` + `HUB-META-CHAT`/`HUB-META-RESP`; the driver prefers the visible composer |
+| Grok | `grok.json` | https://grok.com/ | planned | Native login window opened; pending validation |
+| Microsoft Copilot | `copilot.json` | https://copilot.com/ | planned | Native login window opened; pending validation |
 | ~~Mistral Le Chat~~ | — | https://chat.mistral.ai/ | **excluded** | Cloudflare bot challenge; no bypass attempted (removed) |
 | ~~Claude Web~~ | — | https://claude.ai/new | **excluded** | Cloudflare bot challenge; no bypass attempted (removed) |
 | ~~Z.ai / GLM~~ | — | https://chat.z.ai/ | **excluded** | Slider security verification ("drag the slider to complete the puzzle"); no bypass attempted (removed) |
-| ~~Grok~~ | — | https://grok.com/ | **not admitted** | Login wall; anti-bot risk, low gain |
-| ~~Copilot~~ | — | https://copilot.microsoft.com/ | **not admitted** | Sign-in wall; anti-bot risk |
+| ~~Ernie (Baidu)~~ | — | https://yiyan.baidu.com/ | **excluded** | Owner could not create an account; removed |
 
 Cloudflare challenges and CAPTCHA sliders are anti-bot gates. Per project rules they are **never**
 bypassed, so Mistral, Claude and Z.ai are left out. Grok and Copilot remain unregistered.
