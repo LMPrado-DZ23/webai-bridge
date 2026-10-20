@@ -7,6 +7,21 @@ them as an **OpenAI-compatible** `chat/completions` endpoint. First admitted pro
 > 📘 **Guia completo de uso:** [`docs/USAGE.md`](docs/USAGE.md) — login por provedor, endpoints,
 > como adicionar um provedor novo, regras de gate e diagnóstico.
 
+## Relação com o hub `multi-ai-web`
+
+Esta ponte **funciona sozinha**: qualquer cliente OpenAI pode chamar
+`http://127.0.0.1:8788/v1/chat/completions` diretamente.
+
+Ela também é a **dependência dos 7 provedores web** do hub
+[`multi-ai-web`](https://github.com/LMPrado-DZ23/multi-ai-web): o hub sozinho não fala com sites —
+sem esta ponte no ar (`:8788`), Qwen, Kimi, Gemini, Perplexity, MiMo, Meta e Grok ficam
+`unreachable`. O catálogo completo do hub também usa:
+
+- [`deepseek-web-bridge`](https://github.com/LMPrado-DZ23/deepseek-web-bridge) — `:8787` (DeepSeek Web)
+- [`codex-chatgpt-web`](https://github.com/LMPrado-DZ23/codex-chatgpt-web) — `:17841` (ChatGPT Web)
+
+Instalação mínima para usar o hub: `multi-ai-web` **+** `webai-bridge`.
+
 > **Stable release 1.0.0:** `ready` providers — **Qwen, Kimi, Gemini, Perplexity, MiMo Studio,
 > Meta AI and Grok** (13/13 tests). Each needs a one-time interactive login in its own Chrome
 > profile; the bridge never reads cookies from, or touches, your personal Chrome profile.
