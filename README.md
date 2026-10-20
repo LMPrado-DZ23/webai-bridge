@@ -4,6 +4,9 @@ Local bridge that drives **logged-in web AI chats** through a dedicated Chrome p
 them as an **OpenAI-compatible** `chat/completions` endpoint. First admitted provider: **Qwen Web**
 (`chat.qwen.ai`). No provider API keys, no local models.
 
+> 📘 **Guia completo de uso:** [`docs/USAGE.md`](docs/USAGE.md) — login por provedor, endpoints,
+> como adicionar um provedor novo, regras de gate e diagnóstico.
+
 > **Stable release 1.0.0:** `ready` providers — **Qwen, Kimi, Gemini, Perplexity, MiMo Studio,
 > Meta AI and Grok** (13/13 tests). Each needs a one-time interactive login in its own Chrome
 > profile; the bridge never reads cookies from, or touches, your personal Chrome profile.
