@@ -1,6 +1,6 @@
 {
   "name": "webai-bridge",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "description": "Local bridge that drives logged-in web AI chats (Qwen first, then the other admitted providers) through a real browser profile and exposes them as an OpenAI-compatible chat endpoint.",
   "type": "module",
